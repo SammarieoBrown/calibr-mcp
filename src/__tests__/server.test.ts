@@ -19,29 +19,29 @@ describe('createCalibrMcpServer', () => {
     expect(tools.length).toBe(23);
 
     const names = tools.map((t) => t.name);
-    expect(names).toContain('score_applicant');
-    expect(names).toContain('score_batch');
-    expect(names).toContain('list_models');
-    expect(names).toContain('get_model');
-    expect(names).toContain('deploy_model');
-    expect(names).toContain('list_deployments');
-    expect(names).toContain('get_deployment');
-    expect(names).toContain('get_deployment_stats');
-    expect(names).toContain('compare_models');
-    expect(names).toContain('promote_challenger');
-    expect(names).toContain('rollback_deployment');
-    expect(names).toContain('update_traffic');
-    expect(names).toContain('list_api_keys');
-    expect(names).toContain('create_api_key');
-    expect(names).toContain('revoke_api_key');
-    expect(names).toContain('rotate_api_key');
-    expect(names).toContain('list_webhooks');
-    expect(names).toContain('create_webhook');
-    expect(names).toContain('delete_webhook');
-    expect(names).toContain('test_webhook');
-    expect(names).toContain('get_usage');
-    expect(names).toContain('get_usage_history');
-    expect(names).toContain('get_audit_log');
+    expect(names).toContain('calibr_score_applicant');
+    expect(names).toContain('calibr_score_batch');
+    expect(names).toContain('calibr_list_models');
+    expect(names).toContain('calibr_get_model');
+    expect(names).toContain('calibr_deploy_model');
+    expect(names).toContain('calibr_list_deployments');
+    expect(names).toContain('calibr_get_deployment');
+    expect(names).toContain('calibr_get_deployment_stats');
+    expect(names).toContain('calibr_compare_models');
+    expect(names).toContain('calibr_promote_challenger');
+    expect(names).toContain('calibr_rollback_deployment');
+    expect(names).toContain('calibr_update_traffic');
+    expect(names).toContain('calibr_list_api_keys');
+    expect(names).toContain('calibr_create_api_key');
+    expect(names).toContain('calibr_revoke_api_key');
+    expect(names).toContain('calibr_rotate_api_key');
+    expect(names).toContain('calibr_list_webhooks');
+    expect(names).toContain('calibr_create_webhook');
+    expect(names).toContain('calibr_delete_webhook');
+    expect(names).toContain('calibr_test_webhook');
+    expect(names).toContain('calibr_get_usage');
+    expect(names).toContain('calibr_get_usage_history');
+    expect(names).toContain('calibr_get_audit_log');
 
     await client.close();
     await server.close();
@@ -68,7 +68,7 @@ describe('createCalibrMcpServer', () => {
     const [ct, st] = InMemoryTransport.createLinkedPair();
     await Promise.all([server.connect(st), client.connect(ct)]);
 
-    const result = await client.callTool({ name: 'list_models', arguments: {} });
+    const result = await client.callTool({ name: 'calibr_list_models', arguments: {} });
     expect(result.content).toHaveLength(1);
 
     await client.close();

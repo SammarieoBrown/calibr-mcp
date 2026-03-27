@@ -24,7 +24,7 @@ export function registerWebhooksTools(server: McpServer, client: CalibrClient): 
   // ---------------------------------------------------------------------------
   // list_webhooks — GET /api/v1/webhooks
   // ---------------------------------------------------------------------------
-  server.tool('list_webhooks', 'List all registered webhooks for the current account.', {}, async () => {
+  server.tool('calibr_list_webhooks', 'List all webhooks configured for your Calibr organization. Webhooks receive notifications for events like model deployments, promotions, and key changes.', {}, async () => {
     const result = await client.get('/v1/webhooks');
     return toolResult(result);
   });
@@ -33,8 +33,8 @@ export function registerWebhooksTools(server: McpServer, client: CalibrClient): 
   // create_webhook — POST /api/v1/webhooks
   // ---------------------------------------------------------------------------
   server.tool(
-    'create_webhook',
-    'Register a new webhook endpoint to receive Calibr event notifications.',
+    'calibr_create_webhook',
+    'Create a new Calibr webhook to receive notifications. Supported events: model.deployed, deployment.promoted, deployment.rolled_back, deployment.traffic_updated, key.created, key.revoked, key.rotated.',
     {
       name: z.string().describe('Human-readable name for the webhook'),
       url: z.string().url().describe('HTTPS URL that will receive webhook POST requests'),
@@ -59,8 +59,8 @@ export function registerWebhooksTools(server: McpServer, client: CalibrClient): 
   // delete_webhook — DELETE /api/v1/webhooks/{id}
   // ---------------------------------------------------------------------------
   server.tool(
-    'delete_webhook',
-    'Delete a webhook endpoint by its ID, stopping all future deliveries.',
+    'calibr_delete_webhook',
+    'Delete a Calibr webhook. This cannot be undone.',
     {
       webhook_id: z.string().describe('The ID of the webhook to delete'),
     },
@@ -74,8 +74,8 @@ export function registerWebhooksTools(server: McpServer, client: CalibrClient): 
   // test_webhook — POST /api/v1/webhooks/{id}/test
   // ---------------------------------------------------------------------------
   server.tool(
-    'test_webhook',
-    'Send a test event to a webhook endpoint to verify it is reachable and responding correctly.',
+    'calibr_test_webhook',
+    'Send a test event to a Calibr webhook endpoint to verify it is correctly receiving and processing events.',
     {
       webhook_id: z.string().describe('The ID of the webhook to test'),
     },

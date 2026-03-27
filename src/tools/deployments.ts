@@ -31,8 +31,8 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
   // list_deployments — GET /api/v1/deployments
   // -------------------------------------------------------------------------
   server.tool(
-    'list_deployments',
-    'List all model deployments in the Calibr platform.',
+    'calibr_list_deployments',
+    'List all active Calibr credit risk scorecard deployments. Each deployment has a slug (e.g. dep_WAUM), a champion model, and optionally challenger models for A/B testing. Use this to find deployment slugs for scoring.',
     {},
     async () => {
       const result = await client.get('/v1/deployments');
@@ -44,8 +44,8 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
   // get_deployment — GET /api/v1/deployments/{slug}
   // -------------------------------------------------------------------------
   server.tool(
-    'get_deployment',
-    'Get details for a specific deployment by its slug.',
+    'calibr_get_deployment',
+    'Get full detail for a Calibr deployment including champion model, challenger models, traffic split percentages, and shadow mode status. Use the deployment slug (e.g. dep_WAUM).',
     {
       deployment_slug: z.string().describe('The deployment slug identifier'),
     },
@@ -59,8 +59,8 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
   // get_deployment_stats — GET /api/v1/deployments/{slug}/stats
   // -------------------------------------------------------------------------
   server.tool(
-    'get_deployment_stats',
-    'Get performance statistics for a specific deployment (requests, latency, error rate).',
+    'calibr_get_deployment_stats',
+    'Get live scoring statistics for a Calibr deployment: total scores processed, average score, average latency, and recent scoring activity. Use the deployment slug (e.g. dep_WAUM).',
     {
       deployment_slug: z.string().describe('The deployment slug identifier'),
     },
@@ -74,8 +74,8 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
   // compare_models — GET /api/v1/deployments/{slug}/compare
   // -------------------------------------------------------------------------
   server.tool(
-    'compare_models',
-    'Compare the champion and challenger models for a deployment to support promotion decisions.',
+    'calibr_compare_models',
+    'Compare champion vs challenger model performance for a Calibr deployment. Shows score distributions, average scores, and key metrics to decide whether to promote the challenger.',
     {
       deployment_slug: z.string().describe('The deployment slug identifier'),
     },
@@ -89,8 +89,8 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
   // promote_challenger — POST /api/v1/deployments/{slug}/promote
   // -------------------------------------------------------------------------
   server.tool(
-    'promote_challenger',
-    'Promote the challenger model to champion status for a deployment.',
+    'calibr_promote_challenger',
+    'Promote a challenger model to champion in a Calibr deployment. This replaces the current champion and deactivates all challengers. Requires admin permissions. This is a production-impacting action.',
     {
       deployment_slug: z.string().describe('The deployment slug identifier'),
       challenger_id: z.string().describe('The ID of the challenger model to promote'),
@@ -107,8 +107,8 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
   // rollback_deployment — POST /api/v1/deployments/{slug}/rollback
   // -------------------------------------------------------------------------
   server.tool(
-    'rollback_deployment',
-    'Roll back a deployment to the previous champion model version.',
+    'calibr_rollback_deployment',
+    'Rollback a Calibr deployment to its previous champion model. Use this if a recently promoted model is underperforming. Requires admin permissions.',
     {
       deployment_slug: z.string().describe('The deployment slug identifier'),
     },
@@ -122,8 +122,8 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
   // update_traffic — PATCH /api/v1/deployments/{slug}/traffic
   // -------------------------------------------------------------------------
   server.tool(
-    'update_traffic',
-    'Update the traffic split percentage sent to the challenger model for A/B testing.',
+    'calibr_update_traffic',
+    'Adjust the traffic split between champion and challenger models in a Calibr deployment. Set what percentage of scoring requests go to the challenger (0-100).',
     {
       deployment_slug: z.string().describe('The deployment slug identifier'),
       challenger_id: z.string().describe('The ID of the challenger model receiving traffic'),

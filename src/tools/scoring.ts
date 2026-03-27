@@ -7,8 +7,8 @@ export function registerScoringTools(server: McpServer, client: CalibrClient): v
   // score_applicant — POST /api/v1/score/{slug}
   // ---------------------------------------------------------------------------
   server.tool(
-    'score_applicant',
-    'Score a single credit applicant against a deployed model. Returns a credit score, probability of default, and grade.',
+    'calibr_score_applicant',
+    'Score a single credit applicant using a Calibr scorecard deployment. Calls the Calibr credit risk API at api.cali-br.com. Returns credit score, risk grade, probability of default, and point breakdown by variable.',
     {
       deployment_slug: z.string().describe('The deployment slug to score against'),
       applicant: z
@@ -38,8 +38,8 @@ export function registerScoringTools(server: McpServer, client: CalibrClient): v
   // score_batch — POST /api/v1/score/{slug}/batch
   // ---------------------------------------------------------------------------
   server.tool(
-    'score_batch',
-    'Score a batch of credit applicants (up to 1000) against a deployed model in a single request.',
+    'calibr_score_batch',
+    'Score a batch of credit applicants (up to 1000) using a Calibr scorecard deployment in a single request. Calls the Calibr credit risk API at api.cali-br.com.',
     {
       deployment_slug: z.string().describe('The deployment slug to score against'),
       applicants: z

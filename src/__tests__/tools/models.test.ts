@@ -37,7 +37,7 @@ async function makeConnectedClient(apiKey = TEST_KEY) {
 // ---------------------------------------------------------------------------
 // list_models
 // ---------------------------------------------------------------------------
-describe('list_models', () => {
+describe('calibr_list_models', () => {
   it('returns models list with length 1 and correct name', async () => {
     mockApiServer.use(
       http.get(`${BASE}/v1/models`, () =>
@@ -49,7 +49,7 @@ describe('list_models', () => {
     );
 
     const client = await makeConnectedClient();
-    const result = await client.callTool({ name: 'list_models', arguments: {} });
+    const result = await client.callTool({ name: 'calibr_list_models', arguments: {} });
 
     expect(result.isError).toBeFalsy();
     const text = (result.content as Array<{ type: string; text: string }>)[0].text;
@@ -66,7 +66,7 @@ describe('list_models', () => {
     );
 
     const client = await makeConnectedClient('bad_key');
-    const result = await client.callTool({ name: 'list_models', arguments: {} });
+    const result = await client.callTool({ name: 'calibr_list_models', arguments: {} });
 
     expect(result.isError).toBe(true);
     const text = (result.content as Array<{ type: string; text: string }>)[0].text;
@@ -77,7 +77,7 @@ describe('list_models', () => {
 // ---------------------------------------------------------------------------
 // get_model
 // ---------------------------------------------------------------------------
-describe('get_model', () => {
+describe('calibr_get_model', () => {
   it('returns model detail', async () => {
     const modelDetail = {
       id: 'mdl_abc123',
@@ -94,7 +94,7 @@ describe('get_model', () => {
 
     const client = await makeConnectedClient();
     const result = await client.callTool({
-      name: 'get_model',
+      name: 'calibr_get_model',
       arguments: { model_id: 'mdl_abc123' },
     });
 
@@ -114,7 +114,7 @@ describe('get_model', () => {
 
     const client = await makeConnectedClient();
     const result = await client.callTool({
-      name: 'get_model',
+      name: 'calibr_get_model',
       arguments: { model_id: 'mdl_notfound' },
     });
 
@@ -127,7 +127,7 @@ describe('get_model', () => {
 // ---------------------------------------------------------------------------
 // deploy_model
 // ---------------------------------------------------------------------------
-describe('deploy_model', () => {
+describe('calibr_deploy_model', () => {
   it('successfully deploys a model', async () => {
     const deployResult = {
       deployment_id: 'dep_xyz789',
@@ -144,7 +144,7 @@ describe('deploy_model', () => {
 
     const client = await makeConnectedClient();
     const result = await client.callTool({
-      name: 'deploy_model',
+      name: 'calibr_deploy_model',
       arguments: {
         spec: { variables: ['age', 'income'], scorebands: [{ min: 0, max: 100, grade: 'A' }] },
         environment: 'production',
@@ -172,7 +172,7 @@ describe('deploy_model', () => {
 
     const client = await makeConnectedClient();
     const result = await client.callTool({
-      name: 'deploy_model',
+      name: 'calibr_deploy_model',
       arguments: {
         spec: {},
         environment: 'staging',

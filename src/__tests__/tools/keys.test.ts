@@ -37,10 +37,10 @@ async function callTool(
 // ---------------------------------------------------------------------------
 // list_api_keys
 // ---------------------------------------------------------------------------
-describe('list_api_keys', () => {
+describe('calibr_list_api_keys', () => {
   it('returns the list of API keys', async () => {
     const { server } = makeSetup();
-    const result = await callTool(server, 'list_api_keys');
+    const result = await callTool(server, 'calibr_list_api_keys');
     const typed = result as { content: Array<{ type: string; text: string }> };
     expect(typed.content[0].type).toBe('text');
     const data = JSON.parse(typed.content[0].text) as typeof fixtures.keysList;
@@ -51,10 +51,10 @@ describe('list_api_keys', () => {
 // ---------------------------------------------------------------------------
 // create_api_key
 // ---------------------------------------------------------------------------
-describe('create_api_key', () => {
+describe('calibr_create_api_key', () => {
   it('creates a new key and returns a secret key value', async () => {
     const { server } = makeSetup();
-    const result = await callTool(server, 'create_api_key', {
+    const result = await callTool(server, 'calibr_create_api_key', {
       name: 'New Key',
       scopes: ['score'],
       environment: 'production',
@@ -70,10 +70,10 @@ describe('create_api_key', () => {
 // ---------------------------------------------------------------------------
 // revoke_api_key
 // ---------------------------------------------------------------------------
-describe('revoke_api_key', () => {
+describe('calibr_revoke_api_key', () => {
   it('revokes the key and returns success', async () => {
     const { server } = makeSetup();
-    const result = await callTool(server, 'revoke_api_key', { key_id: 'key_001' });
+    const result = await callTool(server, 'calibr_revoke_api_key', { key_id: 'key_001' });
     const typed = result as { content: Array<{ type: string; text: string }> };
     expect(typed.content[0].type).toBe('text');
     const data = JSON.parse(typed.content[0].text) as typeof fixtures.deleteSuccess;
@@ -84,10 +84,10 @@ describe('revoke_api_key', () => {
 // ---------------------------------------------------------------------------
 // rotate_api_key
 // ---------------------------------------------------------------------------
-describe('rotate_api_key', () => {
+describe('calibr_rotate_api_key', () => {
   it('rotates the key and returns the new key value', async () => {
     const { server } = makeSetup();
-    const result = await callTool(server, 'rotate_api_key', { key_id: 'key_001' });
+    const result = await callTool(server, 'calibr_rotate_api_key', { key_id: 'key_001' });
     const typed = result as { content: Array<{ type: string; text: string }> };
     expect(typed.content[0].type).toBe('text');
     const data = JSON.parse(typed.content[0].text) as typeof fixtures.rotatedKey;

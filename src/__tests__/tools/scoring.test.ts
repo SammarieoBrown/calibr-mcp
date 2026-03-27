@@ -34,7 +34,7 @@ async function buildMcpClient() {
 // ---------------------------------------------------------------------------
 // score_applicant
 // ---------------------------------------------------------------------------
-describe('score_applicant', () => {
+describe('calibr_score_applicant', () => {
   it('returns score on success', async () => {
     // Override with a fixture that has score=724, grade='A'
     mockApiServer.use(
@@ -45,7 +45,7 @@ describe('score_applicant', () => {
 
     const mcpClient = await buildMcpClient();
     const result = await mcpClient.callTool({
-      name: 'score_applicant',
+      name: 'calibr_score_applicant',
       arguments: {
         deployment_slug: 'retail-v2-prod',
         applicant: { age: 35, income: 55000 },
@@ -68,7 +68,7 @@ describe('score_applicant', () => {
 
     const mcpClient = await buildMcpClient();
     const result = await mcpClient.callTool({
-      name: 'score_applicant',
+      name: 'calibr_score_applicant',
       arguments: {
         deployment_slug: 'retail-v2-prod',
         applicant: { age: 35 },
@@ -93,7 +93,7 @@ describe('score_applicant', () => {
 
     const mcpClient = await buildMcpClient();
     const result = await mcpClient.callTool({
-      name: 'score_applicant',
+      name: 'calibr_score_applicant',
       arguments: {
         deployment_slug: 'retail-v2-prod',
         applicant: { age: 35 },
@@ -110,11 +110,11 @@ describe('score_applicant', () => {
 // ---------------------------------------------------------------------------
 // score_batch
 // ---------------------------------------------------------------------------
-describe('score_batch', () => {
+describe('calibr_score_batch', () => {
   it('returns results on success', async () => {
     const mcpClient = await buildMcpClient();
     const result = await mcpClient.callTool({
-      name: 'score_batch',
+      name: 'calibr_score_batch',
       arguments: {
         deployment_slug: 'retail-v2-prod',
         applicants: [
@@ -143,7 +143,7 @@ describe('score_batch', () => {
 
     const mcpClient = await buildMcpClient();
     const result = await mcpClient.callTool({
-      name: 'score_batch',
+      name: 'calibr_score_batch',
       arguments: {
         deployment_slug: 'retail-v2-prod',
         applicants: [],

@@ -24,7 +24,7 @@ export function registerKeysTools(server: McpServer, client: CalibrClient): void
   // ---------------------------------------------------------------------------
   // list_api_keys — GET /api/v1/keys
   // ---------------------------------------------------------------------------
-  server.tool('list_api_keys', 'List all API keys for the current account.', {}, async () => {
+  server.tool('calibr_list_api_keys', 'List all Calibr API keys for your organization. Shows key prefix, scopes (score, read, admin), environment (production/staging), and last used date. Full key values are never returned.', {}, async () => {
     const result = await client.get('/v1/keys');
     return toolResult(result);
   });
@@ -33,8 +33,8 @@ export function registerKeysTools(server: McpServer, client: CalibrClient): void
   // create_api_key — POST /api/v1/keys
   // ---------------------------------------------------------------------------
   server.tool(
-    'create_api_key',
-    'Create a new API key with optional scopes and environment.',
+    'calibr_create_api_key',
+    'Create a new Calibr API key. Returns the full key value ONCE — store it securely as it cannot be retrieved again. Requires admin permissions.',
     {
       name: z.string().describe('Human-readable name for the API key'),
       scopes: z
@@ -58,8 +58,8 @@ export function registerKeysTools(server: McpServer, client: CalibrClient): void
   // revoke_api_key — DELETE /api/v1/keys/{id}
   // ---------------------------------------------------------------------------
   server.tool(
-    'revoke_api_key',
-    'Permanently revoke an API key by its ID.',
+    'calibr_revoke_api_key',
+    'Permanently revoke a Calibr API key. This cannot be undone — the key will immediately stop working. Requires admin permissions.',
     {
       key_id: z.string().describe('The ID of the API key to revoke'),
     },
@@ -73,8 +73,8 @@ export function registerKeysTools(server: McpServer, client: CalibrClient): void
   // rotate_api_key — POST /api/v1/keys/{id}/rotate
   // ---------------------------------------------------------------------------
   server.tool(
-    'rotate_api_key',
-    'Rotate an API key, invalidating the old value and returning a new one.',
+    'calibr_rotate_api_key',
+    'Rotate a Calibr API key — generates a new key value and invalidates the old one. Returns the new full key value ONCE. Requires admin permissions.',
     {
       key_id: z.string().describe('The ID of the API key to rotate'),
     },

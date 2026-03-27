@@ -60,9 +60,9 @@ describe('server handles concurrent tool calls', () => {
     const { server, client } = await buildSession('cal_live_concurrent');
 
     const [modelsResult, usageResult, deploymentsResult] = await Promise.all([
-      client.callTool({ name: 'list_models', arguments: {} }),
-      client.callTool({ name: 'get_usage', arguments: {} }),
-      client.callTool({ name: 'list_deployments', arguments: {} }),
+      client.callTool({ name: 'calibr_list_models', arguments: {} }),
+      client.callTool({ name: 'calibr_get_usage', arguments: {} }),
+      client.callTool({ name: 'calibr_list_deployments', arguments: {} }),
     ]);
 
     expect(modelsResult.isError).toBeFalsy();

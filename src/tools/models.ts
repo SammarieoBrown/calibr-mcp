@@ -5,8 +5,8 @@ import type { CalibrClient } from '../client.js';
 export function registerModelsTools(server: McpServer, client: CalibrClient): void {
   // list_models — GET /api/v1/models
   server.tool(
-    'list_models',
-    'List all deployed scorecard models for your organization.',
+    'calibr_list_models',
+    'List all deployed credit risk scorecard models in the Calibr platform (api.cali-br.com). Returns model name, version, status, environment (production/staging), and deployer info. Use this to discover available models before scoring.',
     {},
     async () => {
       const result = await client.get('/v1/models');
@@ -31,8 +31,8 @@ export function registerModelsTools(server: McpServer, client: CalibrClient): vo
 
   // get_model — GET /api/v1/models/{id}
   server.tool(
-    'get_model',
-    'Get full detail for a specific deployed model, including the scorecard spec.',
+    'calibr_get_model',
+    'Get full detail for a specific Calibr credit risk scorecard model including the complete spec with variable definitions, bins, weights, and WoE values. Use this to understand what input variables a model expects before scoring.',
     { model_id: z.string() },
     async ({ model_id }) => {
       const result = await client.get(`/v1/models/${model_id}`);
@@ -57,8 +57,8 @@ export function registerModelsTools(server: McpServer, client: CalibrClient): vo
 
   // deploy_model — POST /api/v1/models/deploy
   server.tool(
-    'deploy_model',
-    'Deploy a scorecard model to an environment.',
+    'calibr_deploy_model',
+    'Deploy a Calibr credit risk scorecard model to production or staging. Requires the full scorecard spec JSON containing model definition, variables, bins, and weights. Returns the new model ID and deployment slug.',
     {
       spec: z.record(z.unknown()),
       environment: z.enum(['production', 'staging']),

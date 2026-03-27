@@ -23,7 +23,7 @@ export function registerObservabilityTools(server: McpServer, client: CalibrClie
   // ---------------------------------------------------------------------------
   // get_usage — GET /api/v1/usage
   // ---------------------------------------------------------------------------
-  server.tool('get_usage', 'Get current month API usage.', {}, async () => {
+  server.tool('calibr_get_usage', 'Get the current month Calibr API usage for your organization: total score count, batch count, batch record count, plan tier, usage limit, and overage costs.', {}, async () => {
     const result = await client.get('/v1/usage');
     return toolResult(result);
   });
@@ -31,7 +31,7 @@ export function registerObservabilityTools(server: McpServer, client: CalibrClie
   // ---------------------------------------------------------------------------
   // get_usage_history — GET /api/v1/usage/history
   // ---------------------------------------------------------------------------
-  server.tool('get_usage_history', 'Get historical API usage across past months.', {}, async () => {
+  server.tool('calibr_get_usage_history', 'Get historical Calibr API usage data across previous months. Shows scoring volumes and costs over time.', {}, async () => {
     const result = await client.get('/v1/usage/history');
     return toolResult(result);
   });
@@ -40,8 +40,8 @@ export function registerObservabilityTools(server: McpServer, client: CalibrClie
   // get_audit_log — GET /api/v1/audit
   // ---------------------------------------------------------------------------
   server.tool(
-    'get_audit_log',
-    'Get the audit log of account actions, optionally filtered by action type.',
+    'calibr_get_audit_log',
+    'Get Calibr audit log entries for your organization. Tracks all actions: model deployments, promotions, rollbacks, key operations, and more. Supports filtering by action type and pagination.',
     {
       action: z.string().optional().describe('Filter by action type (e.g. deployment.promoted)'),
       page: z.number().default(1).describe('Page number (default 1)'),

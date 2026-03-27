@@ -36,34 +36,34 @@ describe('client can list all 23 tools', () => {
 
     const names = tools.map((t) => t.name);
     // Scoring
-    expect(names).toContain('score_applicant');
-    expect(names).toContain('score_batch');
+    expect(names).toContain('calibr_score_applicant');
+    expect(names).toContain('calibr_score_batch');
     // Models
-    expect(names).toContain('list_models');
-    expect(names).toContain('get_model');
-    expect(names).toContain('deploy_model');
+    expect(names).toContain('calibr_list_models');
+    expect(names).toContain('calibr_get_model');
+    expect(names).toContain('calibr_deploy_model');
     // Deployments
-    expect(names).toContain('list_deployments');
-    expect(names).toContain('get_deployment');
-    expect(names).toContain('get_deployment_stats');
-    expect(names).toContain('compare_models');
-    expect(names).toContain('promote_challenger');
-    expect(names).toContain('rollback_deployment');
-    expect(names).toContain('update_traffic');
+    expect(names).toContain('calibr_list_deployments');
+    expect(names).toContain('calibr_get_deployment');
+    expect(names).toContain('calibr_get_deployment_stats');
+    expect(names).toContain('calibr_compare_models');
+    expect(names).toContain('calibr_promote_challenger');
+    expect(names).toContain('calibr_rollback_deployment');
+    expect(names).toContain('calibr_update_traffic');
     // Keys
-    expect(names).toContain('list_api_keys');
-    expect(names).toContain('create_api_key');
-    expect(names).toContain('revoke_api_key');
-    expect(names).toContain('rotate_api_key');
+    expect(names).toContain('calibr_list_api_keys');
+    expect(names).toContain('calibr_create_api_key');
+    expect(names).toContain('calibr_revoke_api_key');
+    expect(names).toContain('calibr_rotate_api_key');
     // Webhooks
-    expect(names).toContain('list_webhooks');
-    expect(names).toContain('create_webhook');
-    expect(names).toContain('delete_webhook');
-    expect(names).toContain('test_webhook');
+    expect(names).toContain('calibr_list_webhooks');
+    expect(names).toContain('calibr_create_webhook');
+    expect(names).toContain('calibr_delete_webhook');
+    expect(names).toContain('calibr_test_webhook');
     // Observability
-    expect(names).toContain('get_usage');
-    expect(names).toContain('get_usage_history');
-    expect(names).toContain('get_audit_log');
+    expect(names).toContain('calibr_get_usage');
+    expect(names).toContain('calibr_get_usage_history');
+    expect(names).toContain('calibr_get_audit_log');
 
     await client.close();
     await server.close();
@@ -84,7 +84,7 @@ describe('client can call score_applicant', () => {
     const { server, client } = await buildPair();
 
     const result = await client.callTool({
-      name: 'score_applicant',
+      name: 'calibr_score_applicant',
       arguments: {
         deployment_slug: 'retail-v2-prod',
         applicant: { age: 35, income: 55000 },
@@ -108,7 +108,7 @@ describe('client can call list_models', () => {
   it('returns models array', async () => {
     const { server, client } = await buildPair();
 
-    const result = await client.callTool({ name: 'list_models', arguments: {} });
+    const result = await client.callTool({ name: 'calibr_list_models', arguments: {} });
 
     expect(result.isError).toBeFalsy();
     const text = (result.content as Array<{ type: string; text: string }>)[0].text;
@@ -152,7 +152,7 @@ describe('error responses are properly formatted', () => {
 
     const { server, client } = await buildPair('cal_test_bad', 'https://unreachable.calibr.invalid');
 
-    const result = await client.callTool({ name: 'list_models', arguments: {} });
+    const result = await client.callTool({ name: 'calibr_list_models', arguments: {} });
 
     expect(result.isError).toBe(true);
     const text = (result.content as Array<{ type: string; text: string }>)[0].text;

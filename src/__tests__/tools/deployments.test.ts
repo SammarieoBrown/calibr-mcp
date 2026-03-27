@@ -39,10 +39,10 @@ async function makeTestClient(apiKey = TEST_KEY) {
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
-describe('list_deployments', () => {
+describe('calibr_list_deployments', () => {
   it('returns deployments list', async () => {
     const client = await makeTestClient();
-    const result = await client.callTool({ name: 'list_deployments', arguments: {} });
+    const result = await client.callTool({ name: 'calibr_list_deployments', arguments: {} });
 
     expect(result.isError).toBeFalsy();
     const text = (result.content[0] as { type: string; text: string }).text;
@@ -52,11 +52,11 @@ describe('list_deployments', () => {
   });
 });
 
-describe('get_deployment', () => {
+describe('calibr_get_deployment', () => {
   it('returns deployment detail', async () => {
     const client = await makeTestClient();
     const result = await client.callTool({
-      name: 'get_deployment',
+      name: 'calibr_get_deployment',
       arguments: { deployment_slug: 'retail-v2-prod' },
     });
 
@@ -68,7 +68,7 @@ describe('get_deployment', () => {
   });
 });
 
-describe('get_deployment_stats', () => {
+describe('calibr_get_deployment_stats', () => {
   it('returns stats with total_scores=5000', async () => {
     mockApiServer.use(
       http.get(`${BASE}/v1/deployments/retail-v2-prod/stats`, () =>
@@ -78,7 +78,7 @@ describe('get_deployment_stats', () => {
 
     const client = await makeTestClient();
     const result = await client.callTool({
-      name: 'get_deployment_stats',
+      name: 'calibr_get_deployment_stats',
       arguments: { deployment_slug: 'retail-v2-prod' },
     });
 
@@ -89,11 +89,11 @@ describe('get_deployment_stats', () => {
   });
 });
 
-describe('compare_models', () => {
+describe('calibr_compare_models', () => {
   it('returns model comparison', async () => {
     const client = await makeTestClient();
     const result = await client.callTool({
-      name: 'compare_models',
+      name: 'calibr_compare_models',
       arguments: { deployment_slug: 'retail-v2-prod' },
     });
 
@@ -106,11 +106,11 @@ describe('compare_models', () => {
   });
 });
 
-describe('promote_challenger', () => {
+describe('calibr_promote_challenger', () => {
   it('succeeds', async () => {
     const client = await makeTestClient();
     const result = await client.callTool({
-      name: 'promote_challenger',
+      name: 'calibr_promote_challenger',
       arguments: { deployment_slug: 'retail-v2-prod', challenger_id: 'mdl_def456' },
     });
 
@@ -122,11 +122,11 @@ describe('promote_challenger', () => {
   });
 });
 
-describe('rollback_deployment', () => {
+describe('calibr_rollback_deployment', () => {
   it('succeeds', async () => {
     const client = await makeTestClient();
     const result = await client.callTool({
-      name: 'rollback_deployment',
+      name: 'calibr_rollback_deployment',
       arguments: { deployment_slug: 'retail-v2-prod' },
     });
 
@@ -138,11 +138,11 @@ describe('rollback_deployment', () => {
   });
 });
 
-describe('update_traffic', () => {
+describe('calibr_update_traffic', () => {
   it('succeeds', async () => {
     const client = await makeTestClient();
     const result = await client.callTool({
-      name: 'update_traffic',
+      name: 'calibr_update_traffic',
       arguments: {
         deployment_slug: 'retail-v2-prod',
         challenger_id: 'mdl_def456',
@@ -167,7 +167,7 @@ describe('error handling', () => {
     );
 
     const client = await makeTestClient('bad_key');
-    const result = await client.callTool({ name: 'list_deployments', arguments: {} });
+    const result = await client.callTool({ name: 'calibr_list_deployments', arguments: {} });
 
     expect(result.isError).toBe(true);
     const text = (result.content[0] as { type: string; text: string }).text;

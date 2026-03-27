@@ -36,10 +36,10 @@ async function callTool(
 // ---------------------------------------------------------------------------
 // list_webhooks
 // ---------------------------------------------------------------------------
-describe('list_webhooks', () => {
+describe('calibr_list_webhooks', () => {
   it('returns the list of webhooks', async () => {
     const { server } = makeSetup();
-    const result = await callTool(server, 'list_webhooks');
+    const result = await callTool(server, 'calibr_list_webhooks');
     const typed = result as { content: Array<{ type: string; text: string }> };
     expect(typed.content[0].type).toBe('text');
     const data = JSON.parse(typed.content[0].text) as typeof fixtures.webhooksList;
@@ -50,10 +50,10 @@ describe('list_webhooks', () => {
 // ---------------------------------------------------------------------------
 // create_webhook
 // ---------------------------------------------------------------------------
-describe('create_webhook', () => {
+describe('calibr_create_webhook', () => {
   it('creates a new webhook and returns the webhook data', async () => {
     const { server } = makeSetup();
-    const result = await callTool(server, 'create_webhook', {
+    const result = await callTool(server, 'calibr_create_webhook', {
       name: 'My Webhook',
       url: 'https://myapp.example.com/webhooks/calibr-new',
       events: ['score.completed'],
@@ -69,10 +69,10 @@ describe('create_webhook', () => {
 // ---------------------------------------------------------------------------
 // delete_webhook
 // ---------------------------------------------------------------------------
-describe('delete_webhook', () => {
+describe('calibr_delete_webhook', () => {
   it('deletes a webhook and returns success', async () => {
     const { server } = makeSetup();
-    const result = await callTool(server, 'delete_webhook', { webhook_id: 'wh_001' });
+    const result = await callTool(server, 'calibr_delete_webhook', { webhook_id: 'wh_001' });
     const typed = result as { content: Array<{ type: string; text: string }> };
     expect(typed.content[0].type).toBe('text');
     const data = JSON.parse(typed.content[0].text) as typeof fixtures.deleteSuccess;
@@ -83,10 +83,10 @@ describe('delete_webhook', () => {
 // ---------------------------------------------------------------------------
 // test_webhook
 // ---------------------------------------------------------------------------
-describe('test_webhook', () => {
+describe('calibr_test_webhook', () => {
   it('sends a test event and returns the result', async () => {
     const { server } = makeSetup();
-    const result = await callTool(server, 'test_webhook', { webhook_id: 'wh_001' });
+    const result = await callTool(server, 'calibr_test_webhook', { webhook_id: 'wh_001' });
     const typed = result as { content: Array<{ type: string; text: string }> };
     expect(typed.content[0].type).toBe('text');
     const data = JSON.parse(typed.content[0].text) as typeof fixtures.webhookTestResult;

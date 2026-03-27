@@ -38,7 +38,7 @@ async function setup() {
 // ---------------------------------------------------------------------------
 // get_usage
 // ---------------------------------------------------------------------------
-describe('get_usage', () => {
+describe('calibr_get_usage', () => {
   it('returns current month usage including score_count and plan_tier', async () => {
     mockApiServer.use(
       http.get('https://api.cali-br.com/v1/usage', () =>
@@ -53,7 +53,7 @@ describe('get_usage', () => {
     );
 
     const { mcpClient } = await setup();
-    const result = await mcpClient.callTool({ name: 'get_usage', arguments: {} });
+    const result = await mcpClient.callTool({ name: 'calibr_get_usage', arguments: {} });
 
     expect(result.isError).toBeFalsy();
     const text = (result.content[0] as { type: string; text: string }).text;
@@ -66,10 +66,10 @@ describe('get_usage', () => {
 // ---------------------------------------------------------------------------
 // get_usage_history
 // ---------------------------------------------------------------------------
-describe('get_usage_history', () => {
+describe('calibr_get_usage_history', () => {
   it('returns usage history across past months', async () => {
     const { mcpClient } = await setup();
-    const result = await mcpClient.callTool({ name: 'get_usage_history', arguments: {} });
+    const result = await mcpClient.callTool({ name: 'calibr_get_usage_history', arguments: {} });
 
     expect(result.isError).toBeFalsy();
     const text = (result.content[0] as { type: string; text: string }).text;
@@ -82,7 +82,7 @@ describe('get_usage_history', () => {
 // ---------------------------------------------------------------------------
 // get_audit_log
 // ---------------------------------------------------------------------------
-describe('get_audit_log', () => {
+describe('calibr_get_audit_log', () => {
   it('returns audit log entries', async () => {
     mockApiServer.use(
       http.get('https://api.cali-br.com/v1/audit', () =>
@@ -101,7 +101,7 @@ describe('get_audit_log', () => {
     );
 
     const { mcpClient } = await setup();
-    const result = await mcpClient.callTool({ name: 'get_audit_log', arguments: {} });
+    const result = await mcpClient.callTool({ name: 'calibr_get_audit_log', arguments: {} });
 
     expect(result.isError).toBeFalsy();
     const text = (result.content[0] as { type: string; text: string }).text;
@@ -131,7 +131,7 @@ describe('get_audit_log', () => {
 
     const { mcpClient } = await setup();
     const result = await mcpClient.callTool({
-      name: 'get_audit_log',
+      name: 'calibr_get_audit_log',
       arguments: { action: 'deployment.promoted', page: 2, limit: 25 },
     });
 

@@ -1,5 +1,5 @@
 {
-  "name": "@calibr/mcp",
+  "name": "calibr-mcp",
   "version": "0.1.0",
   "description": "MCP server for the Calibr credit risk platform",
   "type": "module",

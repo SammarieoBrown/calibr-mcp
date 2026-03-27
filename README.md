@@ -1,4 +1,4 @@
-# @calibr/mcp
+# calibr-mcp
 
 MCP server for the [Calibr](https://cali-br.com) credit risk platform. Score applicants, manage models, and monitor deployments from any MCP-compatible AI agent.
 
@@ -7,7 +7,7 @@ MCP server for the [Calibr](https://cali-br.com) credit risk platform. Score app
 ### Claude Code (stdio)
 
 ```bash
-claude mcp add calibr -- npx @calibr/mcp --api-key sk_live_YOUR_KEY
+claude mcp add calibr -- npx calibr-mcp --api-key sk_live_YOUR_KEY
 ```
 
 ### Cursor (stdio)
@@ -19,7 +19,7 @@ Add to `.cursor/mcp.json`:
   "mcpServers": {
     "calibr": {
       "command": "npx",
-      "args": ["@calibr/mcp", "--api-key", "sk_live_YOUR_KEY"]
+      "args": ["calibr-mcp", "--api-key", "sk_live_YOUR_KEY"]
     }
   }
 }

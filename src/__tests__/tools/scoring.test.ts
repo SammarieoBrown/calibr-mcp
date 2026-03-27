@@ -38,7 +38,7 @@ describe('score_applicant', () => {
   it('returns score on success', async () => {
     // Override with a fixture that has score=724, grade='A'
     mockApiServer.use(
-      http.post('https://api.cali-br.com/api/v1/score/retail-v2-prod', () =>
+      http.post('https://api.cali-br.com/v1/score/retail-v2-prod', () =>
         HttpResponse.json({ ...fixtures.scoreResult, score: 724, grade: 'A' }),
       ),
     );
@@ -61,7 +61,7 @@ describe('score_applicant', () => {
 
   it('returns error for auth failure (401)', async () => {
     mockApiServer.use(
-      http.post('https://api.cali-br.com/api/v1/score/retail-v2-prod', () =>
+      http.post('https://api.cali-br.com/v1/score/retail-v2-prod', () =>
         HttpResponse.json({ error: 'unauthorized', details: 'Invalid API key' }, { status: 401 }),
       ),
     );
@@ -83,7 +83,7 @@ describe('score_applicant', () => {
 
   it('returns error for rate limiting (429)', async () => {
     mockApiServer.use(
-      http.post('https://api.cali-br.com/api/v1/score/retail-v2-prod', () =>
+      http.post('https://api.cali-br.com/v1/score/retail-v2-prod', () =>
         HttpResponse.json(
           { error: 'rate_limit_exceeded', retry_after_ms: 5000 },
           { status: 429 },
@@ -133,7 +133,7 @@ describe('score_batch', () => {
 
   it('returns error on failure', async () => {
     mockApiServer.use(
-      http.post('https://api.cali-br.com/api/v1/score/retail-v2-prod/batch', () =>
+      http.post('https://api.cali-br.com/v1/score/retail-v2-prod/batch', () =>
         HttpResponse.json(
           { error: 'validation_error', details: 'Applicants array is empty' },
           { status: 422 },

@@ -24,7 +24,7 @@ export function registerObservabilityTools(server: McpServer, client: CalibrClie
   // get_usage — GET /api/v1/usage
   // ---------------------------------------------------------------------------
   server.tool('get_usage', 'Get current month API usage.', {}, async () => {
-    const result = await client.get('/api/v1/usage');
+    const result = await client.get('/v1/usage');
     return toolResult(result);
   });
 
@@ -32,7 +32,7 @@ export function registerObservabilityTools(server: McpServer, client: CalibrClie
   // get_usage_history — GET /api/v1/usage/history
   // ---------------------------------------------------------------------------
   server.tool('get_usage_history', 'Get historical API usage across past months.', {}, async () => {
-    const result = await client.get('/api/v1/usage/history');
+    const result = await client.get('/v1/usage/history');
     return toolResult(result);
   });
 
@@ -52,7 +52,7 @@ export function registerObservabilityTools(server: McpServer, client: CalibrClie
       if (action !== undefined) {
         query['action'] = action;
       }
-      const result = await client.get('/api/v1/audit', query);
+      const result = await client.get('/v1/audit', query);
       return toolResult(result);
     },
   );

@@ -25,7 +25,7 @@ export function registerKeysTools(server: McpServer, client: CalibrClient): void
   // list_api_keys — GET /api/v1/keys
   // ---------------------------------------------------------------------------
   server.tool('list_api_keys', 'List all API keys for the current account.', {}, async () => {
-    const result = await client.get('/api/v1/keys');
+    const result = await client.get('/v1/keys');
     return toolResult(result);
   });
 
@@ -49,7 +49,7 @@ export function registerKeysTools(server: McpServer, client: CalibrClient): void
         .describe("Target environment for the key (default: 'production')"),
     },
     async ({ name, scopes, environment }) => {
-      const result = await client.post('/api/v1/keys', { name, scopes, environment });
+      const result = await client.post('/v1/keys', { name, scopes, environment });
       return toolResult(result);
     },
   );
@@ -64,7 +64,7 @@ export function registerKeysTools(server: McpServer, client: CalibrClient): void
       key_id: z.string().describe('The ID of the API key to revoke'),
     },
     async ({ key_id }) => {
-      const result = await client.delete(`/api/v1/keys/${key_id}`);
+      const result = await client.delete(`/v1/keys/${key_id}`);
       return toolResult(result);
     },
   );
@@ -79,7 +79,7 @@ export function registerKeysTools(server: McpServer, client: CalibrClient): void
       key_id: z.string().describe('The ID of the API key to rotate'),
     },
     async ({ key_id }) => {
-      const result = await client.post(`/api/v1/keys/${key_id}/rotate`);
+      const result = await client.post(`/v1/keys/${key_id}/rotate`);
       return toolResult(result);
     },
   );

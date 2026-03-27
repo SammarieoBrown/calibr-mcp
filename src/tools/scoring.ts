@@ -16,7 +16,7 @@ export function registerScoringTools(server: McpServer, client: CalibrClient): v
         .describe('Applicant feature data as key-value pairs (e.g. age, income, loan_amount)'),
     },
     async ({ deployment_slug, applicant }) => {
-      const result = await client.post(`/api/v1/score/${deployment_slug}`, applicant);
+      const result = await client.post(`/v1/score/${deployment_slug}`, applicant);
 
       if (!result.ok) {
         const msg = result.error.details
@@ -48,7 +48,7 @@ export function registerScoringTools(server: McpServer, client: CalibrClient): v
         .describe('Array of applicant feature records to score (max 1000)'),
     },
     async ({ deployment_slug, applicants }) => {
-      const result = await client.post(`/api/v1/score/${deployment_slug}/batch`, { applicants });
+      const result = await client.post(`/v1/score/${deployment_slug}/batch`, { applicants });
 
       if (!result.ok) {
         const msg = result.error.details

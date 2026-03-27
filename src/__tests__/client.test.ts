@@ -28,14 +28,14 @@ describe('GET requests', () => {
     let capturedAuth: string | null = null;
 
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/models`, ({ request }) => {
+      http.get(`${BASE}/v1/models`, ({ request }) => {
         capturedAuth = request.headers.get('Authorization');
         return HttpResponse.json(fixtures.modelsList);
       }),
     );
 
     const client = makeClient();
-    const result = await client.get<typeof fixtures.modelsList>('/api/v1/models');
+    const result = await client.get<typeof fixtures.modelsList>('/v1/models');
 
     expect(result.ok).toBe(true);
     if (result.ok) {
@@ -49,20 +49,20 @@ describe('GET requests', () => {
     let capturedUA: string | null = null;
 
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/models`, ({ request }) => {
+      http.get(`${BASE}/v1/models`, ({ request }) => {
         capturedUA = request.headers.get('User-Agent');
         return HttpResponse.json(fixtures.modelsList);
       }),
     );
 
     const client = makeClient();
-    await client.get('/api/v1/models');
+    await client.get('/v1/models');
     expect(capturedUA).toBe('calibr-mcp/0.1.0');
   });
 
   it('returns model detail by id', async () => {
     const client = makeClient();
-    const result = await client.get('/api/v1/models/mdl_abc123');
+    const result = await client.get('/v1/models/mdl_abc123');
     expect(result.ok).toBe(true);
     if (result.ok) expect(result.data).toEqual(fixtures.model);
   });
@@ -76,14 +76,14 @@ describe('Query parameters', () => {
     let capturedUrl: string | null = null;
 
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/usage/history`, ({ request }) => {
+      http.get(`${BASE}/v1/usage/history`, ({ request }) => {
         capturedUrl = request.url;
         return HttpResponse.json(fixtures.usageHistory);
       }),
     );
 
     const client = makeClient();
-    await client.get('/api/v1/usage/history', { limit: 10, offset: 0 });
+    await client.get('/v1/usage/history', { limit: 10, offset: 0 });
 
     expect(capturedUrl).toContain('limit=10');
     expect(capturedUrl).toContain('offset=0');
@@ -93,14 +93,14 @@ describe('Query parameters', () => {
     let capturedUrl: string | null = null;
 
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/usage/history`, ({ request }) => {
+      http.get(`${BASE}/v1/usage/history`, ({ request }) => {
         capturedUrl = request.url;
         return HttpResponse.json(fixtures.usageHistory);
       }),
     );
 
     const client = makeClient();
-    await client.get('/api/v1/usage/history', { limit: 10, offset: undefined });
+    await client.get('/v1/usage/history', { limit: 10, offset: undefined });
 
     expect(capturedUrl).toContain('limit=10');
     expect(capturedUrl).not.toContain('offset');
@@ -108,7 +108,7 @@ describe('Query parameters', () => {
 
   it('works with no query object', async () => {
     const client = makeClient();
-    const result = await client.get('/api/v1/usage');
+    const result = await client.get('/v1/usage');
     expect(result.ok).toBe(true);
   });
 });
@@ -121,7 +121,7 @@ describe('POST requests', () => {
     let capturedBody: unknown = null;
 
     mockApiServer.use(
-      http.post(`${BASE}/api/v1/score/retail-v2-prod`, async ({ request }) => {
+      http.post(`${BASE}/v1/score/retail-v2-prod`, async ({ request }) => {
         capturedBody = await request.json();
         return HttpResponse.json(fixtures.scoreResult);
       }),
@@ -129,7 +129,7 @@ describe('POST requests', () => {
 
     const client = makeClient();
     const payload = { features: { age: 35, income: 55000 } };
-    const result = await client.post('/api/v1/score/retail-v2-prod', payload);
+    const result = await client.post('/v1/score/retail-v2-prod', payload);
 
     expect(result.ok).toBe(true);
     expect(capturedBody).toEqual(payload);
@@ -139,20 +139,20 @@ describe('POST requests', () => {
     let capturedContentType: string | null = null;
 
     mockApiServer.use(
-      http.post(`${BASE}/api/v1/score/retail-v2-prod`, ({ request }) => {
+      http.post(`${BASE}/v1/score/retail-v2-prod`, ({ request }) => {
         capturedContentType = request.headers.get('Content-Type');
         return HttpResponse.json(fixtures.scoreResult);
       }),
     );
 
     const client = makeClient();
-    await client.post('/api/v1/score/retail-v2-prod', { features: {} });
+    await client.post('/v1/score/retail-v2-prod', { features: {} });
     expect(capturedContentType).toBe('application/json');
   });
 
   it('returns 201 status on resource creation', async () => {
     const client = makeClient();
-    const result = await client.post('/api/v1/keys', { name: 'New Key' });
+    const result = await client.post('/v1/keys', { name: 'New Key' });
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(result.status).toBe(201);
@@ -170,7 +170,7 @@ describe('PATCH requests', () => {
     let capturedMethod: string | null = null;
 
     mockApiServer.use(
-      http.patch(`${BASE}/api/v1/deployments/retail-v2-prod/traffic`, async ({ request }) => {
+      http.patch(`${BASE}/v1/deployments/retail-v2-prod/traffic`, async ({ request }) => {
         capturedMethod = request.method;
         capturedBody = await request.json();
         return HttpResponse.json(fixtures.trafficSuccess);
@@ -178,7 +178,7 @@ describe('PATCH requests', () => {
     );
 
     const client = makeClient();
-    const result = await client.patch('/api/v1/deployments/retail-v2-prod/traffic', {
+    const result = await client.patch('/v1/deployments/retail-v2-prod/traffic', {
       traffic_pct: 50,
     });
 
@@ -196,14 +196,14 @@ describe('DELETE requests', () => {
     let capturedMethod: string | null = null;
 
     mockApiServer.use(
-      http.delete(`${BASE}/api/v1/keys/key_001`, ({ request }) => {
+      http.delete(`${BASE}/v1/keys/key_001`, ({ request }) => {
         capturedMethod = request.method;
         return HttpResponse.json(fixtures.deleteSuccess);
       }),
     );
 
     const client = makeClient();
-    const result = await client.delete('/api/v1/keys/key_001');
+    const result = await client.delete('/v1/keys/key_001');
 
     expect(result.ok).toBe(true);
     expect(capturedMethod).toBe('DELETE');
@@ -217,13 +217,13 @@ describe('DELETE requests', () => {
 describe('HTTP error responses', () => {
   it('returns ok:false with error body on 401', async () => {
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/models`, () =>
+      http.get(`${BASE}/v1/models`, () =>
         HttpResponse.json({ error: 'unauthorized', details: 'Invalid API key' }, { status: 401 }),
       ),
     );
 
     const client = makeClient({ apiKey: 'bad_key' });
-    const result = await client.get('/api/v1/models');
+    const result = await client.get('/v1/models');
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
@@ -234,7 +234,7 @@ describe('HTTP error responses', () => {
 
   it('returns ok:false with error body on 403', async () => {
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/audit`, () =>
+      http.get(`${BASE}/v1/audit`, () =>
         HttpResponse.json(
           { error: 'forbidden', details: 'Insufficient permissions' },
           { status: 403 },
@@ -243,7 +243,7 @@ describe('HTTP error responses', () => {
     );
 
     const client = makeClient();
-    const result = await client.get('/api/v1/audit');
+    const result = await client.get('/v1/audit');
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
@@ -254,7 +254,7 @@ describe('HTTP error responses', () => {
 
   it('returns ok:false with retry_after_ms on 429', async () => {
     mockApiServer.use(
-      http.post(`${BASE}/api/v1/score/retail-v2-prod`, () =>
+      http.post(`${BASE}/v1/score/retail-v2-prod`, () =>
         HttpResponse.json(
           { error: 'rate_limit_exceeded', retry_after_ms: 5000 },
           { status: 429 },
@@ -263,7 +263,7 @@ describe('HTTP error responses', () => {
     );
 
     const client = makeClient();
-    const result = await client.post('/api/v1/score/retail-v2-prod', { features: {} });
+    const result = await client.post('/v1/score/retail-v2-prod', { features: {} });
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
@@ -275,7 +275,7 @@ describe('HTTP error responses', () => {
 
   it('handles non-JSON error response bodies', async () => {
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/models`, () =>
+      http.get(`${BASE}/v1/models`, () =>
         new HttpResponse('Internal Server Error', {
           status: 500,
           headers: { 'Content-Type': 'text/plain' },
@@ -284,7 +284,7 @@ describe('HTTP error responses', () => {
     );
 
     const client = makeClient();
-    const result = await client.get('/api/v1/models');
+    const result = await client.get('/v1/models');
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
@@ -300,13 +300,13 @@ describe('HTTP error responses', () => {
 describe('Network errors', () => {
   it('returns network_error when the host is unreachable', async () => {
     mockApiServer.use(
-      http.get('https://unreachable.invalid/api/v1/models', () =>
+      http.get('https://unreachable.invalid/v1/models', () =>
         HttpResponse.error(),
       ),
     );
 
     const client = makeClient({ baseUrl: 'https://unreachable.invalid' });
-    const result = await client.get('/api/v1/models');
+    const result = await client.get('/v1/models');
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
@@ -317,13 +317,13 @@ describe('Network errors', () => {
 
   it('includes the base URL in network_error details', async () => {
     mockApiServer.use(
-      http.get('https://bad-host.invalid/api/v1/models', () =>
+      http.get('https://bad-host.invalid/v1/models', () =>
         HttpResponse.error(),
       ),
     );
 
     const client = makeClient({ baseUrl: 'https://bad-host.invalid' });
-    const result = await client.get('/api/v1/models');
+    const result = await client.get('/v1/models');
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
@@ -340,17 +340,17 @@ describe('Base URL handling', () => {
     let capturedUrl: string | null = null;
 
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/models`, ({ request }) => {
+      http.get(`${BASE}/v1/models`, ({ request }) => {
         capturedUrl = request.url;
         return HttpResponse.json(fixtures.modelsList);
       }),
     );
 
     const client = makeClient({ baseUrl: `${BASE}/` });
-    await client.get('/api/v1/models');
+    await client.get('/v1/models');
 
     // Should not produce double slashes
     expect(capturedUrl).not.toContain('//api/v1');
-    expect(capturedUrl).toContain('/api/v1/models');
+    expect(capturedUrl).toContain('/v1/models');
   });
 });

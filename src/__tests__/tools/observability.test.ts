@@ -41,7 +41,7 @@ async function setup() {
 describe('get_usage', () => {
   it('returns current month usage including score_count and plan_tier', async () => {
     mockApiServer.use(
-      http.get('https://api.cali-br.com/api/v1/usage', () =>
+      http.get('https://api.cali-br.com/v1/usage', () =>
         HttpResponse.json({
           period: '2024-01',
           score_count: 1500,
@@ -85,7 +85,7 @@ describe('get_usage_history', () => {
 describe('get_audit_log', () => {
   it('returns audit log entries', async () => {
     mockApiServer.use(
-      http.get('https://api.cali-br.com/api/v1/audit', () =>
+      http.get('https://api.cali-br.com/v1/audit', () =>
         HttpResponse.json({
           events: [
             {
@@ -113,7 +113,7 @@ describe('get_audit_log', () => {
     let capturedUrl: string | null = null;
 
     mockApiServer.use(
-      http.get('https://api.cali-br.com/api/v1/audit', ({ request }) => {
+      http.get('https://api.cali-br.com/v1/audit', ({ request }) => {
         capturedUrl = request.url;
         return HttpResponse.json({
           events: [

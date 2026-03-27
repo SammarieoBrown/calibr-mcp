@@ -76,7 +76,7 @@ describe('client can list all 23 tools', () => {
 describe('client can call score_applicant', () => {
   it('returns score=724 in response', async () => {
     mockApiServer.use(
-      http.post('https://api.cali-br.com/api/v1/score/retail-v2-prod', () =>
+      http.post('https://api.cali-br.com/v1/score/retail-v2-prod', () =>
         HttpResponse.json({ ...fixtures.scoreResult, score: 724, grade: 'A' }),
       ),
     );
@@ -147,7 +147,7 @@ describe('error responses are properly formatted', () => {
   it('returns isError=true with network_error when baseUrl is unreachable', async () => {
     // Register an error handler so msw intercepts and simulates a network failure
     mockApiServer.use(
-      http.get('https://unreachable.calibr.invalid/api/v1/models', () => HttpResponse.error()),
+      http.get('https://unreachable.calibr.invalid/v1/models', () => HttpResponse.error()),
     );
 
     const { server, client } = await buildPair('cal_test_bad', 'https://unreachable.calibr.invalid');

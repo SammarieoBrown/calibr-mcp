@@ -40,7 +40,7 @@ async function makeConnectedClient(apiKey = TEST_KEY) {
 describe('list_models', () => {
   it('returns models list with length 1 and correct name', async () => {
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/models`, () =>
+      http.get(`${BASE}/v1/models`, () =>
         HttpResponse.json({
           models: [{ id: 'mdl_cc001', name: 'Credit Card Model', status: 'active' }],
           total: 1,
@@ -60,7 +60,7 @@ describe('list_models', () => {
 
   it('returns error on auth failure (401)', async () => {
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/models`, () =>
+      http.get(`${BASE}/v1/models`, () =>
         HttpResponse.json({ error: 'unauthorized', details: 'Invalid API key' }, { status: 401 }),
       ),
     );
@@ -89,7 +89,7 @@ describe('get_model', () => {
     };
 
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/models/mdl_abc123`, () => HttpResponse.json(modelDetail)),
+      http.get(`${BASE}/v1/models/mdl_abc123`, () => HttpResponse.json(modelDetail)),
     );
 
     const client = await makeConnectedClient();
@@ -107,7 +107,7 @@ describe('get_model', () => {
 
   it('returns error for missing model (404)', async () => {
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/models/mdl_notfound`, () =>
+      http.get(`${BASE}/v1/models/mdl_notfound`, () =>
         HttpResponse.json({ error: 'not_found', details: 'Model not found' }, { status: 404 }),
       ),
     );
@@ -137,7 +137,7 @@ describe('deploy_model', () => {
     };
 
     mockApiServer.use(
-      http.post(`${BASE}/api/v1/models/deploy`, () =>
+      http.post(`${BASE}/v1/models/deploy`, () =>
         HttpResponse.json(deployResult, { status: 201 }),
       ),
     );
@@ -162,7 +162,7 @@ describe('deploy_model', () => {
 
   it('returns error for invalid spec (422)', async () => {
     mockApiServer.use(
-      http.post(`${BASE}/api/v1/models/deploy`, () =>
+      http.post(`${BASE}/v1/models/deploy`, () =>
         HttpResponse.json(
           { error: 'validation_error', details: 'Spec is missing required fields' },
           { status: 422 },

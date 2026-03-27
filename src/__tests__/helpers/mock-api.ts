@@ -164,60 +164,60 @@ export const fixtures = {
 // ---------------------------------------------------------------------------
 export const handlers = [
   // Scoring
-  http.post(`${BASE}/api/v1/score/:slug`, () => HttpResponse.json(fixtures.scoreResult)),
-  http.post(`${BASE}/api/v1/score/:slug/batch`, () => HttpResponse.json(fixtures.batchResult)),
+  http.post(`${BASE}/v1/score/:slug`, () => HttpResponse.json(fixtures.scoreResult)),
+  http.post(`${BASE}/v1/score/:slug/batch`, () => HttpResponse.json(fixtures.batchResult)),
 
   // Models
-  http.get(`${BASE}/api/v1/models`, () => HttpResponse.json(fixtures.modelsList)),
-  http.get(`${BASE}/api/v1/models/:id`, () => HttpResponse.json(fixtures.model)),
-  http.post(`${BASE}/api/v1/models/deploy`, () =>
+  http.get(`${BASE}/v1/models`, () => HttpResponse.json(fixtures.modelsList)),
+  http.get(`${BASE}/v1/models/:id`, () => HttpResponse.json(fixtures.model)),
+  http.post(`${BASE}/v1/models/deploy`, () =>
     HttpResponse.json(fixtures.deployResult, { status: 201 }),
   ),
 
   // Deployments
-  http.get(`${BASE}/api/v1/deployments`, () => HttpResponse.json(fixtures.deploymentsList)),
-  http.get(`${BASE}/api/v1/deployments/:slug`, ({ params }) => {
+  http.get(`${BASE}/v1/deployments`, () => HttpResponse.json(fixtures.deploymentsList)),
+  http.get(`${BASE}/v1/deployments/:slug`, ({ params }) => {
     // Guard against matching /stats or /compare sub-paths
     const slug = params['slug'] as string;
     if (slug === 'stats' || slug === 'compare') return HttpResponse.json({ error: 'not found' }, { status: 404 });
     return HttpResponse.json(fixtures.deployment);
   }),
-  http.get(`${BASE}/api/v1/deployments/:slug/stats`, () =>
+  http.get(`${BASE}/v1/deployments/:slug/stats`, () =>
     HttpResponse.json(fixtures.deploymentStats),
   ),
-  http.get(`${BASE}/api/v1/deployments/:slug/compare`, () =>
+  http.get(`${BASE}/v1/deployments/:slug/compare`, () =>
     HttpResponse.json(fixtures.deploymentCompare),
   ),
-  http.post(`${BASE}/api/v1/deployments/:slug/promote`, () =>
+  http.post(`${BASE}/v1/deployments/:slug/promote`, () =>
     HttpResponse.json(fixtures.promoteSuccess),
   ),
-  http.post(`${BASE}/api/v1/deployments/:slug/rollback`, () =>
+  http.post(`${BASE}/v1/deployments/:slug/rollback`, () =>
     HttpResponse.json(fixtures.rollbackSuccess),
   ),
-  http.patch(`${BASE}/api/v1/deployments/:slug/traffic`, () =>
+  http.patch(`${BASE}/v1/deployments/:slug/traffic`, () =>
     HttpResponse.json(fixtures.trafficSuccess),
   ),
 
   // API Keys
-  http.get(`${BASE}/api/v1/keys`, () => HttpResponse.json(fixtures.keysList)),
-  http.post(`${BASE}/api/v1/keys`, () => HttpResponse.json(fixtures.newApiKey, { status: 201 })),
-  http.delete(`${BASE}/api/v1/keys/:id`, () => HttpResponse.json(fixtures.deleteSuccess)),
-  http.post(`${BASE}/api/v1/keys/:id/rotate`, () => HttpResponse.json(fixtures.rotatedKey)),
+  http.get(`${BASE}/v1/keys`, () => HttpResponse.json(fixtures.keysList)),
+  http.post(`${BASE}/v1/keys`, () => HttpResponse.json(fixtures.newApiKey, { status: 201 })),
+  http.delete(`${BASE}/v1/keys/:id`, () => HttpResponse.json(fixtures.deleteSuccess)),
+  http.post(`${BASE}/v1/keys/:id/rotate`, () => HttpResponse.json(fixtures.rotatedKey)),
 
   // Webhooks
-  http.get(`${BASE}/api/v1/webhooks`, () => HttpResponse.json(fixtures.webhooksList)),
-  http.post(`${BASE}/api/v1/webhooks`, () =>
+  http.get(`${BASE}/v1/webhooks`, () => HttpResponse.json(fixtures.webhooksList)),
+  http.post(`${BASE}/v1/webhooks`, () =>
     HttpResponse.json(fixtures.newWebhook, { status: 201 }),
   ),
-  http.delete(`${BASE}/api/v1/webhooks/:id`, () => HttpResponse.json(fixtures.deleteSuccess)),
-  http.post(`${BASE}/api/v1/webhooks/:id/test`, () =>
+  http.delete(`${BASE}/v1/webhooks/:id`, () => HttpResponse.json(fixtures.deleteSuccess)),
+  http.post(`${BASE}/v1/webhooks/:id/test`, () =>
     HttpResponse.json(fixtures.webhookTestResult),
   ),
 
   // Usage & Audit
-  http.get(`${BASE}/api/v1/usage`, () => HttpResponse.json(fixtures.usage)),
-  http.get(`${BASE}/api/v1/usage/history`, () => HttpResponse.json(fixtures.usageHistory)),
-  http.get(`${BASE}/api/v1/audit`, () => HttpResponse.json(fixtures.auditLog)),
+  http.get(`${BASE}/v1/usage`, () => HttpResponse.json(fixtures.usage)),
+  http.get(`${BASE}/v1/usage/history`, () => HttpResponse.json(fixtures.usageHistory)),
+  http.get(`${BASE}/v1/audit`, () => HttpResponse.json(fixtures.auditLog)),
 ];
 
 // ---------------------------------------------------------------------------

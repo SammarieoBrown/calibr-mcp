@@ -35,7 +35,7 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
     'List all model deployments in the Calibr platform.',
     {},
     async () => {
-      const result = await client.get('/api/v1/deployments');
+      const result = await client.get('/v1/deployments');
       return toolResult(result);
     },
   );
@@ -50,7 +50,7 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
       deployment_slug: z.string().describe('The deployment slug identifier'),
     },
     async ({ deployment_slug }) => {
-      const result = await client.get(`/api/v1/deployments/${deployment_slug}`);
+      const result = await client.get(`/v1/deployments/${deployment_slug}`);
       return toolResult(result);
     },
   );
@@ -65,7 +65,7 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
       deployment_slug: z.string().describe('The deployment slug identifier'),
     },
     async ({ deployment_slug }) => {
-      const result = await client.get(`/api/v1/deployments/${deployment_slug}/stats`);
+      const result = await client.get(`/v1/deployments/${deployment_slug}/stats`);
       return toolResult(result);
     },
   );
@@ -80,7 +80,7 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
       deployment_slug: z.string().describe('The deployment slug identifier'),
     },
     async ({ deployment_slug }) => {
-      const result = await client.get(`/api/v1/deployments/${deployment_slug}/compare`);
+      const result = await client.get(`/v1/deployments/${deployment_slug}/compare`);
       return toolResult(result);
     },
   );
@@ -96,7 +96,7 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
       challenger_id: z.string().describe('The ID of the challenger model to promote'),
     },
     async ({ deployment_slug, challenger_id }) => {
-      const result = await client.post(`/api/v1/deployments/${deployment_slug}/promote`, {
+      const result = await client.post(`/v1/deployments/${deployment_slug}/promote`, {
         challenger_id,
       });
       return toolResult(result);
@@ -113,7 +113,7 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
       deployment_slug: z.string().describe('The deployment slug identifier'),
     },
     async ({ deployment_slug }) => {
-      const result = await client.post(`/api/v1/deployments/${deployment_slug}/rollback`);
+      const result = await client.post(`/v1/deployments/${deployment_slug}/rollback`);
       return toolResult(result);
     },
   );
@@ -134,7 +134,7 @@ export function registerDeploymentsTools(server: McpServer, client: CalibrClient
         .describe('Percentage of traffic (0-100) to route to the challenger model'),
     },
     async ({ deployment_slug, challenger_id, traffic_pct }) => {
-      const result = await client.patch(`/api/v1/deployments/${deployment_slug}/traffic`, {
+      const result = await client.patch(`/v1/deployments/${deployment_slug}/traffic`, {
         challenger_id,
         traffic_pct,
       });

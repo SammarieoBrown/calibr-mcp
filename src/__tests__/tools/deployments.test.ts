@@ -71,7 +71,7 @@ describe('get_deployment', () => {
 describe('get_deployment_stats', () => {
   it('returns stats with total_scores=5000', async () => {
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/deployments/retail-v2-prod/stats`, () =>
+      http.get(`${BASE}/v1/deployments/retail-v2-prod/stats`, () =>
         HttpResponse.json({ ...fixtures.deploymentStats, total_scores: 5000 }),
       ),
     );
@@ -161,7 +161,7 @@ describe('update_traffic', () => {
 describe('error handling', () => {
   it('returns error on auth failure (list_deployments 401)', async () => {
     mockApiServer.use(
-      http.get(`${BASE}/api/v1/deployments`, () =>
+      http.get(`${BASE}/v1/deployments`, () =>
         HttpResponse.json({ error: 'unauthorized', details: 'Invalid API key' }, { status: 401 }),
       ),
     );

@@ -25,7 +25,7 @@ export function registerWebhooksTools(server: McpServer, client: CalibrClient): 
   // list_webhooks — GET /api/v1/webhooks
   // ---------------------------------------------------------------------------
   server.tool('list_webhooks', 'List all registered webhooks for the current account.', {}, async () => {
-    const result = await client.get('/api/v1/webhooks');
+    const result = await client.get('/v1/webhooks');
     return toolResult(result);
   });
 
@@ -50,7 +50,7 @@ export function registerWebhooksTools(server: McpServer, client: CalibrClient): 
     async ({ name, url, events, secret }) => {
       const body: Record<string, unknown> = { name, url, events };
       if (secret !== undefined) body.secret = secret;
-      const result = await client.post('/api/v1/webhooks', body);
+      const result = await client.post('/v1/webhooks', body);
       return toolResult(result);
     },
   );
@@ -65,7 +65,7 @@ export function registerWebhooksTools(server: McpServer, client: CalibrClient): 
       webhook_id: z.string().describe('The ID of the webhook to delete'),
     },
     async ({ webhook_id }) => {
-      const result = await client.delete(`/api/v1/webhooks/${webhook_id}`);
+      const result = await client.delete(`/v1/webhooks/${webhook_id}`);
       return toolResult(result);
     },
   );
@@ -80,7 +80,7 @@ export function registerWebhooksTools(server: McpServer, client: CalibrClient): 
       webhook_id: z.string().describe('The ID of the webhook to test'),
     },
     async ({ webhook_id }) => {
-      const result = await client.post(`/api/v1/webhooks/${webhook_id}/test`);
+      const result = await client.post(`/v1/webhooks/${webhook_id}/test`);
       return toolResult(result);
     },
   );

@@ -9,7 +9,7 @@ export function registerModelsTools(server: McpServer, client: CalibrClient): vo
     'List all deployed scorecard models for your organization.',
     {},
     async () => {
-      const result = await client.get('/api/v1/models');
+      const result = await client.get('/v1/models');
       if (!result.ok) {
         return {
           isError: true,
@@ -35,7 +35,7 @@ export function registerModelsTools(server: McpServer, client: CalibrClient): vo
     'Get full detail for a specific deployed model, including the scorecard spec.',
     { model_id: z.string() },
     async ({ model_id }) => {
-      const result = await client.get(`/api/v1/models/${model_id}`);
+      const result = await client.get(`/v1/models/${model_id}`);
       if (!result.ok) {
         return {
           isError: true,
@@ -66,7 +66,7 @@ export function registerModelsTools(server: McpServer, client: CalibrClient): vo
       auto_deploy: z.boolean().optional().default(true),
     },
     async ({ spec, environment, description, auto_deploy }) => {
-      const result = await client.post('/api/v1/models/deploy', {
+      const result = await client.post('/v1/models/deploy', {
         spec,
         environment,
         description: description ?? null,
